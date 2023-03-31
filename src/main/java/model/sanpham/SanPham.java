@@ -35,10 +35,6 @@ public class SanPham extends PrimaryModel implements Serializable {
     private XuatXu xuatXu;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinColumn(name = "danh_muc_id")
-    private DanhMuc danhMuc;
-
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "chat_lieu_id")
     private ChatLieu chatLieu;
 

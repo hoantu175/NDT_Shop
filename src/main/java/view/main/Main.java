@@ -1,27 +1,27 @@
 package view.main;
 
-
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Calendar;
 import net.miginfocom.swing.MigLayout;
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 import view.component.Header;
 import view.component.Menu;
-import view.dialog.Message;
 import view.dialog.ShowMessage;
 import view.event.EventMenuSelected;
 import view.event.EventShowPopupMenu;
 import view.form.thongke.ViewDoanhThu;
 import view.form.MainForm;
+import view.form.sanpham.ViewAo;
 import view.swing.MenuItem;
 import view.swing.PopupMenu;
 import view.swing.icon.GoogleMaterialDesignIcons;
 import view.swing.icon.IconFontSwing;
 
-public class Main extends javax.swing.JFrame {
+public class Main extends javax.swing.JFrame implements Runnable{
 
     private MigLayout layout;
     private Menu menu;
@@ -40,6 +40,7 @@ public class Main extends javax.swing.JFrame {
         menu = new Menu();
         header = new Header();
         main = new MainForm();
+        new Thread(this).start();
         menu.addEvent(new EventMenuSelected() {
             @Override
             public void menuSelected(int menuIndex, int subMenuIndex) {
@@ -49,6 +50,10 @@ public class Main extends javax.swing.JFrame {
                         main.showForm(new ViewDoanhThu());
 //                    } else if (subMenuIndex == 1) {
 //                        main.showForm(new Form1());
+                    }
+                } else if (menuIndex == 2) {
+                    if (subMenuIndex == 0) {
+                        main.showForm(new ViewAo());
                     }
                 } else if (menuIndex == 7) {
                     if (ShowMessage.show("Bạn chắc chắn muốn thoát ?")) {
@@ -191,4 +196,24 @@ public class Main extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLayeredPane bg;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void run() {
+        while (true) {
+            try {
+                Calendar c = Calendar.getInstance();
+                int h = c.get(Calendar.HOUR_OF_DAY);
+                int m = c.get(Calendar.MINUTE);
+                int s = c.get(Calendar.SECOND);
+                int day = c.get(Calendar.DATE);
+                int month = c.get(Calendar.MONTH) + 1;
+                int year = c.get(Calendar.YEAR);
+                String am_pm = c.get(Calendar.AM_PM) == 1 ? "PM" : "AM";
+                String time = h + ":" + m + ":" + s + " " + am_pm + " - " + day + "/" + month + "/" + year;
+                header.lbCurrentTime.setText(time);
+                Thread.sleep(1000);
+            } catch (Exception e) {
+            }
+        }
+    }
 }

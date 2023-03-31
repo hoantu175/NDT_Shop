@@ -21,7 +21,6 @@ public class SanPhamDTO extends AuditModelDTO {
 
     private XuatXuDTO xuatXu;
 
-    private DanhMucDTO danhMuc;
 
     private ChatLieuDTO chatLieu;
 
