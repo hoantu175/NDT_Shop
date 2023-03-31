@@ -23,9 +23,6 @@ public class Table extends JTable {
             @Override
             public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
                 TableHeader header = new TableHeader(o + "");
-                if (i1 == 4) {
-                    header.setHorizontalAlignment(JLabel.CENTER);
-                }
                 return header;
             }
         });
@@ -68,11 +65,7 @@ public class Table extends JTable {
 
     @Override
     public TableCellEditor getCellEditor(int row, int col) {
-        if (col == 4) {
-            return new TableCellAction();
-        } else {
-            return super.getCellEditor(row, col);
-        }
+        return super.getCellEditor(row, col);
     }
 
     public void addRow(Object[] row) {

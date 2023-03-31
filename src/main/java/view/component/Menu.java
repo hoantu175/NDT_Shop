@@ -1,5 +1,6 @@
 package view.component;
 
+import comon.utilities.ImageHelper;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GradientPaint;
@@ -54,14 +55,14 @@ public class Menu extends javax.swing.JPanel {
     }
 
     public void initMenuItem() {
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/icon/3.png")), "Thống kê", "Thống kê doanh thu", "Thống kê sản phẩm"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/icon/5.png")), "Quản lý hoá đơn", "Thêm mới", "Lịch sử"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/icon/3.png")), "Quản lý sản phẩm", "Áo", "Quần"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/icon/4.png")), "Quản lý giảm giá"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/icon/7.png")), "Quản lý nhân viên"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/icon/8.png")), "Quản lý khách Hàng", "Khách hàng", "Thẻ thành viên"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/icon/9.png")), "Đổi mật khẩu"));
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/icon/10.png")), "Thoát"));
+        addMenu(new ModelMenu(ImageHelper.resizeImageIcon(new ImageIcon(getClass().getResource("/icon/analysis.png")), 24, 24), "Thống kê", "Thống kê doanh thu", "Thống kê sản phẩm"));
+        addMenu(new ModelMenu(ImageHelper.resizeImageIcon(new ImageIcon(getClass().getResource("/icon/invoice.png")), 24, 24), "Quản lý hoá đơn", "Thêm mới", "Lịch sử"));
+        addMenu(new ModelMenu(ImageHelper.resizeImageIcon(new ImageIcon(getClass().getResource("/icon/groom-suit.png")), 24, 24), "Quản lý sản phẩm", "Áo", "Quần"));
+        addMenu(new ModelMenu(ImageHelper.resizeImageIcon(new ImageIcon(getClass().getResource("/icon/discounts.png")), 24, 24), "Quản lý giảm giá"));
+        addMenu(new ModelMenu(ImageHelper.resizeImageIcon(new ImageIcon(getClass().getResource("/icon/teamwork.png")), 24, 24), "Quản lý nhân viên"));
+        addMenu(new ModelMenu(ImageHelper.resizeImageIcon(new ImageIcon(getClass().getResource("/icon/target.png")), 24, 24), "Quản lý khách Hàng", "Khách hàng", "Thẻ thành viên"));
+        addMenu(new ModelMenu(ImageHelper.resizeImageIcon(new ImageIcon(getClass().getResource("/icon/key.png")), 24, 24), "Đổi mật khẩu"));
+        addMenu(new ModelMenu(ImageHelper.resizeImageIcon(new ImageIcon(getClass().getResource("/icon/power.png")), 24, 24), "Thoát"));
     }
 
     private void addMenu(ModelMenu menu) {
@@ -123,7 +124,7 @@ public class Menu extends javax.swing.JPanel {
         );
         panelLayout.setVerticalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 535, Short.MAX_VALUE)
+            .addGap(0, 523, Short.MAX_VALUE)
         );
 
         sp.setViewportView(panel);
@@ -132,15 +133,15 @@ public class Menu extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(sp, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
-            .addComponent(profile1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(profile1, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
+            .addComponent(sp, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(profile1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(sp, javax.swing.GroupLayout.PREFERRED_SIZE, 535, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(sp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents

@@ -21,6 +21,7 @@ public class Header extends javax.swing.JPanel {
         jSeparator1 = new javax.swing.JSeparator();
         cmdMenu = new view.swing.Button();
         pic = new view.swing.ImageAvatar();
+        lbCurrentTime = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -37,6 +38,9 @@ public class Header extends javax.swing.JPanel {
 
         pic.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/profile1.jpg"))); // NOI18N
 
+        lbCurrentTime.setForeground(new java.awt.Color(127, 127, 127));
+        lbCurrentTime.setText("18:20:12 20/11/2020");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -44,7 +48,9 @@ public class Header extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(cmdMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 419, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 289, Short.MAX_VALUE)
+                .addComponent(lbCurrentTime)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -67,12 +73,17 @@ public class Header extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lbRole)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(lbCurrentTime)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private view.swing.Button cmdMenu;
     private javax.swing.JSeparator jSeparator1;
+    public javax.swing.JLabel lbCurrentTime;
     private javax.swing.JLabel lbRole;
     private javax.swing.JLabel lbUserName;
     private view.swing.ImageAvatar pic;

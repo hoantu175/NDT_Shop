@@ -39,7 +39,6 @@ import model.nhanvien.NhanVien;
 import model.nhanvien.TaiKhoan;
 import model.sanpham.Ao;
 import model.sanpham.ChatLieu;
-import model.sanpham.DanhMuc;
 import model.sanpham.SizeQuan;
 import model.sanpham.MauSac;
 import model.sanpham.XuatXu;
@@ -205,18 +204,6 @@ public class Migrator {
         x2.setSdt("080003333");
         x2.setTen("Xuất xứ 2");
         session.save(x2);
-
-        DanhMuc dm = new DanhMuc();
-        dm.setMa("DM01");
-        dm.setTen("Tên danh mục 1");
-        dm.setTrangThaiDanhMuc(TrangThaiDanhMuc.TRANG_THAI_1);
-        session.save(dm);
-
-        DanhMuc dm1 = new DanhMuc();
-        dm1.setMa("DM02");
-        dm1.setTen("Tên danh mục 2");
-        dm1.setTrangThaiDanhMuc(TrangThaiDanhMuc.TRANG_THAI_2);
-        session.save(dm1);
 
         SizeQuan s = new SizeQuan();
         s.setMa("Sq1");
