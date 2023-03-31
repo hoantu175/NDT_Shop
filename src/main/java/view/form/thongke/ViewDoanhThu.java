@@ -1,4 +1,4 @@
-package view.form;
+package view.form.thongke;
 
 
 import java.awt.Color;
@@ -12,9 +12,9 @@ import view.swing.icon.GoogleMaterialDesignIcons;
 import view.swing.icon.IconFontSwing;
 import view.swing.table.EventAction;
 
-public class Form_Home extends javax.swing.JPanel {
+public class ViewDoanhThu extends javax.swing.JPanel {
 
-    public Form_Home() {
+    public ViewDoanhThu() {
         initComponents();
         table1.fixTable(jScrollPane1);
         setOpaque(false);
