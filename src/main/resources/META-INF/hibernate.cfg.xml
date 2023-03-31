@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+  "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+  "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.connection.driver_class">
+            com.microsoft.sqlserver.jdbc.SQLServerDriver
+        </property>
+        <property name="hibernate.connection.url">
+            jdbc:sqlserver://localhost:1433;databaseName=NDT_Shop;;encrypt=true;trustservercertificate=true;
+        </property>
+        <property name="hibernate.connection.username">
+            SA
+        </property>
+        <property name="hibernate.connection.password">
+            Nguyen@123
+        </property>
+        <property name="hibernate.dialect">
+            org.hibernate.dialect.SQLServer2008Dialect
+        </property>
+        <property name="show_sql">true</property>
+        <property name="hibernate.globally_quoted_identifiers">true</property>
+        <!--        nhân viên-->
+        <mapping class="model.nhanvien.NhanVien"/>
+        <mapping class="model.nhanvien.TaiKhoan"/>
+        <mapping class="model.nhanvien.GiaoCa"/>
+        <!--        sản phẩm-->
+        <mapping class="model.sanpham.Ao"/>
+        <mapping class="model.sanpham.ChatLieu"/>
+        <mapping class="model.sanpham.SizeAo"/> 
+        <mapping class="model.sanpham.DanhMuc"/> 
+        <mapping class="model.sanpham.SizeQuan"/>
+        <mapping class="model.sanpham.MauSac"/>
+        <mapping class="model.sanpham.XuatXu"/>
+        <mapping class="model.sanpham.Quan"/>
+        <mapping class="model.sanpham.SanPham"/>
+        <mapping class="model.sanpham.ThuongHieu"/>
+        <!--        Đơn giao-->
+        <mapping class="model.dongiao.DonGiao"/>
+        <mapping class="model.dongiao.ThongSo"/>
+        <!--        Giam giá -->
+        <mapping class="model.giamgia.GiamGia"/>
+        <mapping class="model.giamgia.SanPhamGiamGia"/>
+        <!--        Khách hàng-->
+        <mapping class="model.khachhang.LichSuTieuDiem"/>
+        <mapping class="model.khachhang.KhachHang"/>
+        <mapping class="model.khachhang.LoaiThe"/>
+        <mapping class="model.khachhang.QuyDoiDiem"/>
+        <mapping class="model.khachhang.ViDiem"/>
+        <mapping class="model.khachhang.TheThanhVien"/>
+        <!--        Hóa đơn-->
+        <mapping class="model.hoadon.HoaDon"/>
+        <mapping class="model.hoadon.HoaDonChiTiet"/>
+
+    </session-factory>
+</hibernate-configuration>
