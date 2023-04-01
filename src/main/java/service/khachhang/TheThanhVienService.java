@@ -4,24 +4,24 @@
  */
 package service.khachhang;
 
-import dto.khachhang.KhachHangDTO;
+import dto.khachhang.TheThanhVienDTO;
 import java.util.List;
 
 /**
  *
  * @author Admin
  */
-public interface KhachHangService {
+public interface TheThanhVienService {
 
-    List<KhachHangDTO> findAll(int position, int pageSize);
+    List<TheThanhVienDTO> findAll(int position, int pageSize);
+
+    TheThanhVienDTO findById(String id);
     
-    List<KhachHangDTO> findByName(String ten, int position, int pageSize);
+    TheThanhVienDTO findByNgayHetHan(Long ngayHetHan);
 
-    KhachHangDTO findById(String id);
+    String create(TheThanhVienDTO dTO);
 
-    String create(KhachHangDTO dTO);
-
-    String update(KhachHangDTO dTO);
+    String update(TheThanhVienDTO dTO);
 
     boolean delete(String id);
 

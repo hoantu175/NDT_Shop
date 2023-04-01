@@ -11,10 +11,10 @@
             jdbc:sqlserver://localhost:1433;databaseName=NDT_Shop;;encrypt=true;trustservercertificate=true;
         </property>
         <property name="hibernate.connection.username">
-            SA
+            sa
         </property>
         <property name="hibernate.connection.password">
-            Nguyen@123
+            123
         </property>
         <property name="hibernate.dialect">
             org.hibernate.dialect.SQLServer2008Dialect
