@@ -8,11 +8,10 @@ import comon.constant.ModelProperties;
 import comon.constant.giamgia.LoaiGiamGia;
 import comon.constant.giamgia.TrangThaiGiamGia;
 import comon.model.AuditModelDTO;
-import javax.persistence.Column;
+import java.util.Date;
 import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Nationalized;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -23,7 +22,7 @@ import org.hibernate.validator.constraints.NotBlank;
 @Setter
 public class GiamGiaDTO extends AuditModelDTO {
 
-    @NotBlank(message = "Mã Giam giá - Không được để trống !")
+//    @NotBlank(message = "Mã Giam giá - Không được để trống !")
     private String maGg;
 
     @NotBlank(message = "Tên - Không được để trống !")
@@ -33,20 +32,21 @@ public class GiamGiaDTO extends AuditModelDTO {
 
     private Long ngayKetThuc;
 
-    @NotNull(message = "Mức giảm giá phần trăm  - Không được để trống !")
-    private float mucGiamGiaPhanTram;
+//    @NotNull(message = "Gía trị giảm giá  - Không được để trống !")
+    private float giaTriGiamGia;
 
-    @NotNull(message = "Mức giảm giá tiền mặt  - Không được để trống !")
-    private float mucGiamGiaTienMat;
-
-    @NotNull(message = "Điều kiện giảm giá  - Không được để trống !")
+//    @NotNull(message = "Điều kiện giảm giá  - Không được để trống !")
     private float dieuKienGiamGia;
 
-    @NotNull(message = "Trạng thái giảm giá  - Không được để trống !")
+//    @NotNull(message = "Trạng thái giảm giá  - Không được để trống !")
     private TrangThaiGiamGia trangThaiGiamGia;
 
-    @NotNull(message = "Loại giảm giá  - Không được để trống !")
+//    @NotNull(message = "Loại giảm giá  - Không được để trống !")
     private LoaiGiamGia loaiGiamGia;
 
     private String moTa;
+
+    public Object[] toDataRow() {
+        return new Object[]{getId(), ten, giaTriGiamGia, dieuKienGiamGia, loaiGiamGia, trangThaiGiamGia, new Date(ngayBatDau), new Date(ngayKetThuc), moTa};
+    }
 }

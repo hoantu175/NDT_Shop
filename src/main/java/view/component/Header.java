@@ -38,7 +38,8 @@ public class Header extends javax.swing.JPanel {
 
         pic.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/profile1.jpg"))); // NOI18N
 
-        lbCurrentTime.setForeground(new java.awt.Color(127, 127, 127));
+        lbCurrentTime.setFont(new java.awt.Font("UTM Akashi", 1, 18)); // NOI18N
+        lbCurrentTime.setForeground(new java.awt.Color(255, 0, 0));
         lbCurrentTime.setText("18:20:12 20/11/2020");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -48,7 +49,7 @@ public class Header extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(cmdMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 289, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 205, Short.MAX_VALUE)
                 .addComponent(lbCurrentTime)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
