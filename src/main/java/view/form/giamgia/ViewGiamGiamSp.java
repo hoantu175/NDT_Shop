@@ -12,6 +12,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import lombok.Getter;
+import lombok.Setter;
 import model.giamgia.GiamGia;
 import service.giamgia.GiamGiaService;
 import service.giamgia.impl.GiamGiaImpl;
@@ -20,6 +21,7 @@ import view.main.Main;
 import view.model.ModelStudent;
 import view.swing.table.EventAction;
 @Getter
+@Setter
 public class ViewGiamGiamSp extends javax.swing.JPanel {
 
     private final DefaultTableModel dtm;
@@ -45,7 +47,7 @@ public class ViewGiamGiamSp extends javax.swing.JPanel {
         initTableData();
     }
 
-    private void loadData() {
+    public void loadData() {
         String[] columns = {"ID", "TÊN", "GIÁ TRỊ MỨC GIAM GIÁ ", "ĐIỀU KIỆN ", "LOẠI GIẢM GIÁ", "TRẠNG THÁI", "NGÀY BẮT ĐẦU", "NGÀY KẾT THÚC", "MÔ TẢ"};
         dtm.setColumnIdentifiers(columns);
         tblGiamGia.setModel(dtm);
@@ -53,14 +55,14 @@ public class ViewGiamGiamSp extends javax.swing.JPanel {
         showData(service.getAll(currentPage));
     }
 
-    private void showData(List<GiamGiaDTO> lists) {
+    public void showData(List<GiamGiaDTO> lists) {
         dtm.setRowCount(0);
         for (GiamGiaDTO x : lists) {
             dtm.addRow(x.toDataRow());
         }
     }
 
-    private void showPaganation() {
+    public void showPaganation() {
         long countTotalRow = service.count();
         totalPage = (int) Math.ceil(Double.valueOf(countTotalRow) / Double.valueOf(PaginationConstant.DEFAULT_SIZE));
         if (totalPage == 1) {
@@ -75,37 +77,6 @@ public class ViewGiamGiamSp extends javax.swing.JPanel {
         }
         lblPage.setText(currentPage + " of " + totalPage);
         lblCount.setText("Total " + countTotalRow);
-    }
-
-
-    public void saveOrUpdate(String action) {
-        GiamGiaDTO qLGiamGia = modal.form();
-        Set<ConstraintViolation<GiamGiaDTO>> violations = validator.validate(qLGiamGia);
-        if (!violations.isEmpty()) {
-            String errors = "";
-            for (ConstraintViolation<GiamGiaDTO> x : violations) {
-                errors += x.getMessage() + "\n";
-            }
-            JOptionPane.showMessageDialog(this, errors, "ERRORS", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        int row = tblGiamGia.getSelectedRow();
-        String idCV = tblGiamGia.getValueAt(row, 0).toString();
-        if (action.equals("update")) {
-            qLGiamGia.setId(idCV);
-        }
-        if (action.equals("add")) {
-            for (GiamGiaDTO x : service.getAll(currentPage)) {
-                if (x.getMaGg().equals(qLGiamGia.getMaGg())) {
-                    JOptionPane.showMessageDialog(this, "Mã - này đã tồn tại !");
-                    return;
-                }
-            }
-        }
-        String result = service.saveOrUpdate(action, qLGiamGia);
-        JOptionPane.showMessageDialog(this, result);
-        showData(service.getAll(currentPage));
-        showPaganation();
     }
 
     private void initTableData() {

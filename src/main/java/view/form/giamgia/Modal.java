@@ -5,11 +5,18 @@
 package view.form.giamgia;
 
 import comon.constant.giamgia.LoaiGiamGia;
+import comon.constant.giamgia.TrangThaiGiamGia;
+import comon.validator.NDTValidator;
 import dto.giamgia.GiamGiaDTO;
 import java.awt.Color;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 import lombok.Getter;
 import lombok.Setter;
 import service.giamgia.GiamGiaService;
@@ -23,24 +30,27 @@ import service.giamgia.impl.GiamGiaImpl;
 @Setter
 public class Modal extends javax.swing.JDialog {
 
-    GiamGiaService service;
     int xMouse, yMouse;
-    int currentPage = 1;
     DefaultComboBoxModel cbb = new DefaultComboBoxModel();
+    private final DefaultTableModel dtm;
+    private final GiamGiaService service;
+    private final Validator validator;
+    private int currentPage = 1;
+    private int totalPage = 1;
 
-    /**
-     * Creates new form Modal
-     *
-     * @param parent
-     * @param modal
-     */
     public Modal() {
-
         initComponents();
         setLocationRelativeTo(null);
+        this.dtm = new DefaultTableModel();
         this.service = new GiamGiaImpl();
+        this.validator = NDTValidator.getValidator();
         loadCbbLoai(service.getAll(currentPage));
-
+    }
+    public void showData(List<GiamGiaDTO> lists) {
+        dtm.setRowCount(0);
+        for (GiamGiaDTO x : lists) {
+            dtm.addRow(x.toDataRow());
+        }
     }
 
     public void fill(GiamGiaDTO x) {
@@ -57,10 +67,42 @@ public class Modal extends javax.swing.JDialog {
         GiamGiaDTO x = new GiamGiaDTO();
         x.setNgayBatDau(txtBatDau.getDate().getTime());
         x.setNgayKetThuc(txtKetThuc.getDate().getTime());
-        x.setDieuKienGiamGia(Float.valueOf(txtDieuKien.getText()));
+        x.setDieuKienGiamGia(Float.parseFloat(txtDieuKien.getText()));
         x.setLoaiGiamGia((LoaiGiamGia) cbb.getSelectedItem());
         x.setTen(txtTen.getText());
+        x.setMoTa(lblMoTa.getText());
         return x;
+    }
+
+    public void saveOrUpdate(String action) {
+        GiamGiaDTO qLGiamGia = form();
+//        Set<ConstraintViolation<GiamGiaDTO>> violations = new ViewGiamGiamSp().validate(qLGiamGia);
+//        if (!violations.isEmpty()) {
+//            String errors = "";
+//            for (ConstraintViolation<GiamGiaDTO> x : violations) {
+//                errors += x.getMessage() + "\n";
+//            }
+//            JOptionPane.showMessageDialog(this, errors, "ERRORS", JOptionPane.ERROR_MESSAGE);
+//            return;
+//        }
+//        int row = new ViewGiamGiamSp().getTblGiamGia().getSelectedRow();
+//        String idCV = new ViewGiamGiamSp().getTblGiamGia().getValueAt(row, 0).toString();
+//        if (action.equals("update")) {
+//            qLGiamGia.setId(idCV);
+//        }
+//        if (action.equals("add")) {
+//            for (GiamGiaDTO x : service.getAll(currentPage)) {
+//                if (x.getMaGg().equals(qLGiamGia.getMaGg())) {
+//                    JOptionPane.showMessageDialog(this, "Mã - này đã tồn tại !");
+//                    return;
+//                }
+//            }
+//        }
+        String result = service.saveOrUpdate(action, qLGiamGia);
+        JOptionPane.showMessageDialog(this, result);
+        showData(service.getAll(currentPage));
+        new ViewGiamGiamSp().showData(service.getAll(currentPage));
+        new ViewGiamGiamSp().showPaganation();
     }
 
     public void loadCbbLoai(List<GiamGiaDTO> list) {
@@ -376,6 +418,7 @@ public class Modal extends javax.swing.JDialog {
 
     private void exitTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitTxtMouseClicked
         this.dispose();
+        new ViewGiamGiamSp().loadData();
     }//GEN-LAST:event_exitTxtMouseClicked
 
     private void btnCloseMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCloseMouseExited
@@ -408,13 +451,14 @@ public class Modal extends javax.swing.JDialog {
 
     private void btnSaveMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSaveMouseEntered
         // TODO add your handling code here:
-         loginBtn.setBackground(new Color(0, 156, 223));
+        loginBtn.setBackground(new Color(0, 156, 223));
     }//GEN-LAST:event_btnSaveMouseEntered
 
     private void btnSaveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSaveMouseClicked
         // TODO add your handling code here:
-        new ViewGiamGiamSp().saveOrUpdate("add");
-       
+        saveOrUpdate("add");
+        new ViewGiamGiamSp().showData(service.getAll(currentPage));
+
     }//GEN-LAST:event_btnSaveMouseClicked
 
     private void txtDieuKienMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtDieuKienMousePressed

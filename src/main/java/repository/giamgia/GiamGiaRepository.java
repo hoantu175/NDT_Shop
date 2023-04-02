@@ -49,7 +49,7 @@ public class GiamGiaRepository {
             s.saveOrUpdate(x);
             tx.commit();
             return true;
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             e.printStackTrace();
             if (tx != null) {
                 tx.rollback();
