@@ -43,9 +43,15 @@ public class ViewKhachHang extends javax.swing.JPanel {
         for (KhachHangDTO dto : listDTOs) {
             dtm.addRow(dto.toDataRow());
         }
-//        lbTotal.setText("Total: " + khachHangService.totalCount());
+        lbTotal.setText("Total: " + khachHangService.totalCount());
         totalPages = (int) (totalKhachHang / pageSize) + 1;
-//        setStatePagination();
+        setStatePagination();
+    }
+    
+    private void setStatePagination() {
+        btnPrevious.setEnabled(currentPage > 1);
+        btnNext.setEnabled(currentPage < totalPages);
+        lbPagination.setText(currentPage + "/" + totalPages);
     }
 
     private boolean showMessage(String message) {
@@ -66,7 +72,7 @@ public class ViewKhachHang extends javax.swing.JPanel {
         btnPrevious = new javax.swing.JButton();
         btnNext = new javax.swing.JButton();
         lbPagination = new javax.swing.JLabel();
-        lbTotalChucVu = new javax.swing.JLabel();
+        lbTotal = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         button3 = new view.swing.Button();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -137,7 +143,7 @@ public class ViewKhachHang extends javax.swing.JPanel {
 
         lbPagination.setText("1/1");
 
-        lbTotalChucVu.setText("Total: 0");
+        lbTotal.setText("Total: 0");
 
         jButton1.setBackground(new java.awt.Color(0, 102, 255));
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
@@ -169,10 +175,10 @@ public class ViewKhachHang extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton1)
                         .addGap(40, 40, 40)
-                        .addComponent(lbTotalChucVu))
+                        .addComponent(lbTotal))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 561, Short.MAX_VALUE)
                         .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -197,7 +203,7 @@ public class ViewKhachHang extends javax.swing.JPanel {
                     .addComponent(btnPrevious)
                     .addComponent(btnNext)
                     .addComponent(lbPagination)
-                    .addComponent(lbTotalChucVu)
+                    .addComponent(lbTotal)
                     .addComponent(jButton1))
                 .addGap(11, 11, 11))
         );
@@ -366,17 +372,17 @@ public class ViewKhachHang extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPreviousActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviousActionPerformed
-//        if (currentPage > 1) {
-//            currentPage--;
-//        }
-//        loadDataTable();
+        if (currentPage > 1) {
+            currentPage--;
+        }
+        loadDataTable();
     }//GEN-LAST:event_btnPreviousActionPerformed
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
-//        if (currentPage < totalPages) {
-//            currentPage++;
-//        }
-//        loadDataTable();
+        if (currentPage < totalPages) {
+            currentPage++;
+        }
+        loadDataTable();
     }//GEN-LAST:event_btnNextActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -410,7 +416,7 @@ public class ViewKhachHang extends javax.swing.JPanel {
     private javax.swing.JSpinner jSpinner3;
     private javax.swing.JTextPane jTextPane1;
     private javax.swing.JLabel lbPagination;
-    private javax.swing.JLabel lbTotalChucVu;
+    private javax.swing.JLabel lbTotal;
     private view.swing.table.Table tbKhachHang;
     // End of variables declaration//GEN-END:variables
 }
