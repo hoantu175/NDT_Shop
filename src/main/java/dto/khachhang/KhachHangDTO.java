@@ -7,6 +7,7 @@ package dto.khachhang;
 import comon.constant.ModelProperties;
 import comon.constant.khachhang.TrangThaiKhachHang;
 import comon.model.AuditModelDTO;
+import java.util.Date;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import lombok.Getter;
@@ -53,4 +54,7 @@ public class KhachHangDTO extends AuditModelDTO {
 
     private String ghiChu;
 
+    public Object[] toDataRow() {
+        return new Object[]{maKH, this.getTheThanhVien().getMaTTV(), ten, sdt, new Date(ngaySinh), email, diaChi, gioiTinh, ghiChu, soLanMua, trangThaiKhachHang};
+    }
 }
