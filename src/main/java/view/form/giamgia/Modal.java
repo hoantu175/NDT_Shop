@@ -19,6 +19,9 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import lombok.Getter;
 import lombok.Setter;
+import raven.cell.TableActionCellEditor;
+import raven.cell.TableActionCellRender;
+import raven.cell.TableActionEvent;
 import service.giamgia.GiamGiaService;
 import service.giamgia.impl.GiamGiaImpl;
 
@@ -45,7 +48,9 @@ public class Modal extends javax.swing.JDialog {
         this.service = new GiamGiaImpl();
         this.validator = NDTValidator.getValidator();
         loadCbbLoai(service.getAll(currentPage));
+
     }
+
     public void showData(List<GiamGiaDTO> lists) {
         dtm.setRowCount(0);
         for (GiamGiaDTO x : lists) {
@@ -129,7 +134,7 @@ public class Modal extends javax.swing.JDialog {
         jSeparator5 = new javax.swing.JSeparator();
         passLabel1 = new javax.swing.JLabel();
         jSeparator6 = new javax.swing.JSeparator();
-        loginBtn1 = new javax.swing.JPanel();
+        txtSave = new javax.swing.JPanel();
         btnSave = new javax.swing.JLabel();
         jSeparator7 = new javax.swing.JSeparator();
         txtGiamGiaTheoTienMat = new javax.swing.JTextField();
@@ -144,12 +149,10 @@ public class Modal extends javax.swing.JDialog {
         userLabel10 = new javax.swing.JLabel();
         userLabel11 = new javax.swing.JLabel();
         userLabel3 = new javax.swing.JLabel();
-        loginBtn = new javax.swing.JPanel();
-        btnClose = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         lblMoTa = new javax.swing.JTextPane();
-        exitBtn = new javax.swing.JPanel();
-        exitTxt = new javax.swing.JLabel();
+        txtClose = new javax.swing.JPanel();
+        btnClose = new javax.swing.JLabel();
         jSeparator4 = new javax.swing.JSeparator();
         txtBatDau = new com.toedter.calendar.JDateChooser();
         txtKetThuc = new com.toedter.calendar.JDateChooser();
@@ -191,7 +194,7 @@ public class Modal extends javax.swing.JDialog {
         jSeparator6.setForeground(new java.awt.Color(153, 153, 153));
         bg1.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 290, 290, 20));
 
-        loginBtn1.setBackground(new java.awt.Color(0, 134, 190));
+        txtSave.setBackground(new java.awt.Color(51, 102, 255));
 
         btnSave.setFont(new java.awt.Font("Roboto Condensed", 1, 14)); // NOI18N
         btnSave.setForeground(new java.awt.Color(255, 255, 255));
@@ -210,22 +213,22 @@ public class Modal extends javax.swing.JDialog {
             }
         });
 
-        javax.swing.GroupLayout loginBtn1Layout = new javax.swing.GroupLayout(loginBtn1);
-        loginBtn1.setLayout(loginBtn1Layout);
-        loginBtn1Layout.setHorizontalGroup(
-            loginBtn1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loginBtn1Layout.createSequentialGroup()
+        javax.swing.GroupLayout txtSaveLayout = new javax.swing.GroupLayout(txtSave);
+        txtSave.setLayout(txtSaveLayout);
+        txtSaveLayout.setHorizontalGroup(
+            txtSaveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, txtSaveLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-        loginBtn1Layout.setVerticalGroup(
-            loginBtn1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loginBtn1Layout.createSequentialGroup()
+        txtSaveLayout.setVerticalGroup(
+            txtSaveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, txtSaveLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        bg1.add(loginBtn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 550, 130, 40));
+        bg1.add(txtSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 550, 130, 40));
 
         jSeparator7.setForeground(new java.awt.Color(153, 153, 153));
         bg1.add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 200, 290, 20));
@@ -296,13 +299,19 @@ public class Modal extends javax.swing.JDialog {
         userLabel3.setText("Ngày bắt đầu");
         bg1.add(userLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 240, -1, -1));
 
-        loginBtn.setBackground(new java.awt.Color(0, 134, 190));
+        lblMoTa.setBorder(javax.swing.BorderFactory.createTitledBorder("Mô tả"));
+        jScrollPane1.setViewportView(lblMoTa);
 
-        btnClose.setFont(new java.awt.Font("Roboto Condensed", 1, 14)); // NOI18N
+        bg1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 420, 720, 110));
+
+        txtClose.setBackground(new java.awt.Color(51, 102, 255));
+
+        btnClose.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         btnClose.setForeground(new java.awt.Color(255, 255, 255));
         btnClose.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnClose.setText("Close");
         btnClose.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnClose.setPreferredSize(new java.awt.Dimension(40, 40));
         btnClose.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnCloseMouseClicked(evt);
@@ -315,65 +324,22 @@ public class Modal extends javax.swing.JDialog {
             }
         });
 
-        javax.swing.GroupLayout loginBtnLayout = new javax.swing.GroupLayout(loginBtn);
-        loginBtn.setLayout(loginBtnLayout);
-        loginBtnLayout.setHorizontalGroup(
-            loginBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loginBtnLayout.createSequentialGroup()
+        javax.swing.GroupLayout txtCloseLayout = new javax.swing.GroupLayout(txtClose);
+        txtClose.setLayout(txtCloseLayout);
+        txtCloseLayout.setHorizontalGroup(
+            txtCloseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, txtCloseLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-        loginBtnLayout.setVerticalGroup(
-            loginBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loginBtnLayout.createSequentialGroup()
+        txtCloseLayout.setVerticalGroup(
+            txtCloseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, txtCloseLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        bg1.add(loginBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 550, -1, -1));
-
-        lblMoTa.setBorder(javax.swing.BorderFactory.createTitledBorder("Mô tả"));
-        jScrollPane1.setViewportView(lblMoTa);
-
-        bg1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 420, 720, 110));
-
-        exitBtn.setBackground(new java.awt.Color(255, 255, 255));
-
-        exitTxt.setFont(new java.awt.Font("Roboto Light", 0, 24)); // NOI18N
-        exitTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        exitTxt.setText("X");
-        exitTxt.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        exitTxt.setPreferredSize(new java.awt.Dimension(40, 40));
-        exitTxt.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                exitTxtMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                exitTxtMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                exitTxtMouseExited(evt);
-            }
-        });
-
-        javax.swing.GroupLayout exitBtnLayout = new javax.swing.GroupLayout(exitBtn);
-        exitBtn.setLayout(exitBtnLayout);
-        exitBtnLayout.setHorizontalGroup(
-            exitBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, exitBtnLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(exitTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        exitBtnLayout.setVerticalGroup(
-            exitBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, exitBtnLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(exitTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        bg1.add(exitBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, -1, -1));
+        bg1.add(txtClose, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 550, -1, 40));
 
         jSeparator4.setForeground(new java.awt.Color(153, 153, 153));
         bg1.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 130, 270, 20));
@@ -406,31 +372,19 @@ public class Modal extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void exitTxtMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitTxtMouseExited
-        exitBtn.setBackground(Color.white);
-        exitTxt.setForeground(Color.black);
-    }//GEN-LAST:event_exitTxtMouseExited
-
-    private void exitTxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitTxtMouseEntered
-        exitBtn.setBackground(Color.red);
-        exitTxt.setForeground(Color.white);
-    }//GEN-LAST:event_exitTxtMouseEntered
-
-    private void exitTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitTxtMouseClicked
-        this.dispose();
-        new ViewGiamGiamSp().loadData();
-    }//GEN-LAST:event_exitTxtMouseClicked
-
     private void btnCloseMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCloseMouseExited
-        loginBtn.setBackground(new Color(0, 134, 190));
+        txtClose.setBackground(Color.BLUE);
+        btnClose.setForeground(Color.WHITE);
     }//GEN-LAST:event_btnCloseMouseExited
 
     private void btnCloseMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCloseMouseEntered
-        loginBtn.setBackground(new Color(0, 156, 223));
+        txtClose.setBackground(Color.red);
+        btnClose.setForeground(Color.WHITE);
     }//GEN-LAST:event_btnCloseMouseEntered
 
     private void btnCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCloseMouseClicked
-
+        this.dispose();
+        new ViewGiamGiamSp().showData(service.getAll(currentPage));
     }//GEN-LAST:event_btnCloseMouseClicked
 
     private void txtTenMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtTenMousePressed
@@ -446,12 +400,13 @@ public class Modal extends javax.swing.JDialog {
     }//GEN-LAST:event_txtGiamGiaTheoTienMatMousePressed
 
     private void btnSaveMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSaveMouseExited
-        // TODO add your handling code here:
+        txtSave.setBackground(Color.BLUE);
+        btnSave.setForeground(Color.WHITE);
     }//GEN-LAST:event_btnSaveMouseExited
 
     private void btnSaveMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSaveMouseEntered
-        // TODO add your handling code here:
-        loginBtn.setBackground(new Color(0, 156, 223));
+        txtSave.setBackground(Color.GREEN);
+        btnSave.setForeground(Color.WHITE);
     }//GEN-LAST:event_btnSaveMouseEntered
 
     private void btnSaveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSaveMouseClicked
@@ -514,8 +469,6 @@ public class Modal extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> cboLoai;
     private javax.swing.JComboBox<String> cboTrangThai;
     private javax.swing.JLabel citybg1;
-    private javax.swing.JPanel exitBtn;
-    private javax.swing.JLabel exitTxt;
     private javax.swing.JLabel favicon1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator4;
@@ -524,14 +477,14 @@ public class Modal extends javax.swing.JDialog {
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JTextPane lblMoTa;
-    private javax.swing.JPanel loginBtn;
-    private javax.swing.JPanel loginBtn1;
     private javax.swing.JLabel passLabel1;
     private com.toedter.calendar.JDateChooser txtBatDau;
+    private javax.swing.JPanel txtClose;
     private javax.swing.JTextField txtDieuKien;
     private javax.swing.JTextField txtGiaTri;
     private javax.swing.JTextField txtGiamGiaTheoTienMat;
     private com.toedter.calendar.JDateChooser txtKetThuc;
+    private javax.swing.JPanel txtSave;
     private javax.swing.JTextField txtTen;
     private javax.swing.JLabel userLabel10;
     private javax.swing.JLabel userLabel11;

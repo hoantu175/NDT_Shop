@@ -338,7 +338,7 @@ public class Migrator {
         g.setNgayKetThuc(Long.MAX_VALUE);
         g.setTen("Tên giảm giá 1");
         g.setMoTa("Khuyến mãi giảm giá nhân dịp sinh nhất chủ của hàng Lê Duy");
-        g.setTrangThaiGiamGia(TrangThaiGiamGia.TRANG_THAI_1);
+        g.setTrangThaiGiamGia(TrangThaiGiamGia.DANG_HOAT_DONG);
         g.setLoaiGiamGia(LoaiGiamGia.GIAM_GIA_THEO_PHAN_TRAM);
         g.setDieuKienGiamGia(1200);
         session.save(g);
@@ -351,7 +351,7 @@ public class Migrator {
         g1.setNgayKetThuc(Long.MAX_VALUE);
         g1.setTen("Tên giảm giá 2");
         g1.setMoTa("Khuyến mãi giảm giá nhân dịp pass môn dự án 1");
-        g1.setTrangThaiGiamGia(TrangThaiGiamGia.TRANG_THAI_2);
+        g1.setTrangThaiGiamGia(TrangThaiGiamGia.NGUNG_HOAT_DONG);
         g1.setLoaiGiamGia(LoaiGiamGia.GIAM_GIA_THEO_TIEN_MAT);
         g1.setDieuKienGiamGia(3000);
         session.save(g1);

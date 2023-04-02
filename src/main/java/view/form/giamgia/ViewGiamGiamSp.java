@@ -14,12 +14,16 @@ import javax.validation.Validator;
 import lombok.Getter;
 import lombok.Setter;
 import model.giamgia.GiamGia;
+import raven.cell.TableActionCellEditor;
+import raven.cell.TableActionCellRender;
+import raven.cell.TableActionEvent;
 import service.giamgia.GiamGiaService;
 import service.giamgia.impl.GiamGiaImpl;
 import view.dialog.Message;
 import view.main.Main;
 import view.model.ModelStudent;
 import view.swing.table.EventAction;
+
 @Getter
 @Setter
 public class ViewGiamGiamSp extends javax.swing.JPanel {
@@ -41,6 +45,52 @@ public class ViewGiamGiamSp extends javax.swing.JPanel {
         this.validator = NDTValidator.getValidator();
         this.modal = new Modal();
         loadData();
+        createbutton();
+    }
+    
+    private void createbutton(){
+        TableActionEvent event = new TableActionEvent() {
+            @Override
+            public void onEdit(int row) {
+                row = tblGiamGia.getSelectedRow();
+                if (row < 0) {
+                    return;
+                }
+                String id = tblGiamGia.getValueAt(row, 0).toString();
+                Optional<GiamGiaDTO> optional = service.findById(id);
+                if (optional.isPresent()) {
+                    modal.fill(optional.get());
+                    modal.setVisible(true);
+                    modal.getBtnSave().setText("Update");
+                }
+            }
+
+            @Override
+            public void onDelete(int row) {
+                if (tblGiamGia.isEditing()) {
+                    tblGiamGia.getCellEditor().stopCellEditing();
+                }
+                DefaultTableModel model = (DefaultTableModel) tblGiamGia.getModel();
+                model.removeRow(row);
+            }
+
+            @Override
+            public void onView(int row) {
+                     row = tblGiamGia.getSelectedRow();
+                if (row < 0) {
+                    return;
+                }
+                String id = tblGiamGia.getValueAt(row, 0).toString();
+                Optional<GiamGiaDTO> optional = service.findById(id);
+                if (optional.isPresent()) {
+                    modal.fill(optional.get());
+                    modal.setVisible(true);
+                          modal.getBtnSave().setText("View");
+                }
+            }
+        };
+        tblGiamGia.getColumnModel().getColumn(9).setCellRenderer(new TableActionCellRender());
+        tblGiamGia.getColumnModel().getColumn(9).setCellEditor(new TableActionCellEditor(event));
     }
 
     private void initData() {
@@ -48,7 +98,7 @@ public class ViewGiamGiamSp extends javax.swing.JPanel {
     }
 
     public void loadData() {
-        String[] columns = {"ID", "TÊN", "GIÁ TRỊ MỨC GIAM GIÁ ", "ĐIỀU KIỆN ", "LOẠI GIẢM GIÁ", "TRẠNG THÁI", "NGÀY BẮT ĐẦU", "NGÀY KẾT THÚC", "MÔ TẢ"};
+        String[] columns = {"ID", "TÊN", "GIÁ TRỊ MỨC GIAM GIÁ ", "ĐIỀU KIỆN ", "LOẠI GIẢM GIÁ", "TRẠNG THÁI", "NGÀY BẮT ĐẦU", "NGÀY KẾT THÚC", "MÔ TẢ", "FUNCTION"};
         dtm.setColumnIdentifiers(columns);
         tblGiamGia.setModel(dtm);
         showPaganation();
@@ -138,7 +188,6 @@ public class ViewGiamGiamSp extends javax.swing.JPanel {
         jSpinner2 = new javax.swing.JSpinner();
         jSpinner3 = new javax.swing.JSpinner();
         button2 = new view.swing.Button();
-        button4 = new view.swing.Button();
         button5 = new view.swing.Button();
         button6 = new view.swing.Button();
 
@@ -350,10 +399,6 @@ public class ViewGiamGiamSp extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        button4.setBackground(new java.awt.Color(0, 102, 255));
-        button4.setForeground(new java.awt.Color(255, 255, 255));
-        button4.setText("Sửa");
-
         button5.setBackground(new java.awt.Color(0, 102, 255));
         button5.setForeground(new java.awt.Color(255, 255, 255));
         button5.setText("Nhập Excel");
@@ -379,9 +424,7 @@ public class ViewGiamGiamSp extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(51, 51, 51)
                         .addComponent(btnAdd, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
-                        .addGap(50, 50, 50)
-                        .addComponent(button4, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
-                        .addGap(55, 55, 55)
+                        .addGap(320, 320, 320)
                         .addComponent(button5, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
                         .addGap(69, 69, 69)
                         .addComponent(button6, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
@@ -396,7 +439,6 @@ public class ViewGiamGiamSp extends javax.swing.JPanel {
                 .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
@@ -452,16 +494,16 @@ public class ViewGiamGiamSp extends javax.swing.JPanel {
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void tblGiamGiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblGiamGiaMouseClicked
-        int row = tblGiamGia.getSelectedRow();
-        if (row < 0) {
-            return;
-        }
-        String id = tblGiamGia.getValueAt(row, 0).toString();
-        Optional<GiamGiaDTO> optional = service.findById(id);
-        if (optional.isPresent()) {
-            modal.fill(optional.get());
-            modal.setVisible(true);
-        }
+//        int row = tblGiamGia.getSelectedRow();
+//        if (row < 0) {
+//            return;
+//        }
+//        String id = tblGiamGia.getValueAt(row, 0).toString();
+//        Optional<GiamGiaDTO> optional = service.findById(id);
+//        if (optional.isPresent()) {
+//            modal.fill(optional.get());
+//            modal.setVisible(true);
+//        }
     }//GEN-LAST:event_tblGiamGiaMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -472,7 +514,6 @@ public class ViewGiamGiamSp extends javax.swing.JPanel {
     private javax.swing.JButton btnPrevious;
     private view.swing.Button button2;
     private view.swing.Button button3;
-    private view.swing.Button button4;
     private view.swing.Button button5;
     private view.swing.Button button6;
     private javax.swing.JButton jButton1;
