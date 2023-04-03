@@ -58,7 +58,11 @@ public class Main extends javax.swing.JFrame implements Runnable {
                     }
                 } else if (menuIndex == 3) {
                     main.showForm(new ViewGiamGiamSp());
-                } else if (menuIndex == 7) {
+                }
+                 else if (menuIndex == 7) {
+                    main.showForm(new ViewGiamGiamSp());
+                }
+                else if (menuIndex == 8) {
                     if (ShowMessage.show("Bạn chắc chắn muốn thoát ?")) {
                         System.exit(0);
                     }
