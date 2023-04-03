@@ -4,10 +4,25 @@
  */
 package service.dongiao;
 
+import dto.dongiao.DonGiaoDTO;
+import java.util.List;
+
 /**
  *
  * @author ADMIN KH
  */
 public interface DonGiaoService {
-    
+     List<DonGiaoDTO> findAll(int position);
+
+    List<DonGiaoDTO> findAll();
+
+DonGiaoDTO findById(String id);
+
+    String create(DonGiaoDTO dto);
+
+    String update(DonGiaoDTO dto);
+
+    boolean delete(String id);
+
+    long totalCount();
 }

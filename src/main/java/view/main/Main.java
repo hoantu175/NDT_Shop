@@ -1,4 +1,4 @@
-package view.main;
+  package view.main;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
