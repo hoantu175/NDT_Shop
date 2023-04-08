@@ -2,32 +2,27 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package repository.hoadon;
+package repository.dongiao;
 
 import comon.constant.PaginationConstant;
 import comon.utilities.HibernateUtil;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import model.hoadon.HoaDon;
-import org.hibernate.HibernateException;
+import model.dongiao.ThongSo;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 
 /**
  *
- * @author ADMIN KH
+ * @author Admin
  */
-public class HoaDonRepository {
-
-    public List<HoaDon> findAll(int position) {
-        List<HoaDon> listModel;
+public class ThongSoRepository {
+        public List<ThongSo> findAll(int position) {
+        List<ThongSo> listModel;
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String hql = "SELECT x FROM HoaDon x";
-            TypedQuery<HoaDon> query = session.createQuery(hql, HoaDon.class);
+            String hql = "SELECT x FROM ThongSo x";
+            TypedQuery<ThongSo> query = session.createQuery(hql, ThongSo.class);
             query.setFirstResult(position);
             query.setMaxResults(PaginationConstant.DEFAULT_SIZE);
             listModel = query.getResultList();
@@ -35,29 +30,43 @@ public class HoaDonRepository {
         return listModel;
     }
 
-    public List<HoaDon> findAll() {
-        List<HoaDon> listModel;
-        try ( Session s = HibernateUtil.getSessionFactory().openSession()) {
-            String hql = "SELECT x FROM HoaDon x";
-            TypedQuery<HoaDon> query = s.createQuery(hql, HoaDon.class);
+    public List<ThongSo> findAll() {
+        List<ThongSo> listModel;
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "SELECT x FROM ThongSo x";
+            TypedQuery<ThongSo> query = session.createQuery(hql, ThongSo.class);
             listModel = query.getResultList();
         }
         return listModel;
     }
 
-    public HoaDon findById(String id) {
-        HoaDon model;
+    public ThongSo findById(String id) {
+       ThongSo model;
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String hql = "SELECT x FROM HoaDon x WHERE x.id =:id";
-            TypedQuery<HoaDon> query = session.createQuery(hql, HoaDon.class);
+            String hql = "SELECT x FROM ThongSo x WHERE x.id = :id";
+            TypedQuery<ThongSo> query = session.createQuery(hql, ThongSo.class);
             query.setParameter("id", id);
             model = query.getSingleResult();
-
         }
         return model;
     }
 
-    public HoaDon save(HoaDon model) {
+    public ThongSo findByMa(String ma) {
+       ThongSo model = null;
+        List<ThongSo> listModel;
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "SELECT x FROM ThongSo x WHERE x.ma = :ma";
+            TypedQuery<ThongSo> query = session.createQuery(hql, ThongSo.class);
+            query.setParameter("ma", ma);
+            listModel = query.getResultList();
+        }
+        if (!listModel.isEmpty()) {
+            model = listModel.get(0);
+        }
+        return model;
+    }
+
+    public ThongSo save(ThongSo model) {
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.getTransaction();
             transaction.begin();
@@ -69,7 +78,6 @@ public class HoaDonRepository {
                 transaction.rollback();
                 model = null;
             }
-
         } finally {
             return model;
         }
@@ -81,11 +89,10 @@ public class HoaDonRepository {
             Transaction transaction = session.getTransaction();
             transaction.begin();
             try {
-                String hql = "DELETE HoaDon x WHERE x.id = :id";
+                String hql = "DELETE ThongSo x WHERE x.id = :id";
                 Query query = session.createQuery(hql);
                 query.setParameter("id", id);
                 result = query.executeUpdate();
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -96,10 +103,9 @@ public class HoaDonRepository {
     public long totalCount() {
         long total = 0;
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String statement = "SELECT COUNT(x.id) FROM HoaDon x";
+            String statement = "SELECT COUNT(x.id) FROM ThongSo x";
             TypedQuery<Long> query = session.createQuery(statement, Long.class);
             total = query.getSingleResult();
-
         }
         return total;
     }

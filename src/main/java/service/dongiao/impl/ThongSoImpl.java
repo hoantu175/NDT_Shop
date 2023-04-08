@@ -5,62 +5,60 @@
 package service.dongiao.impl;
 
 import comon.utilities.Mapper;
-import dto.dongiao.DonGiaoDTO;
+import dto.dongiao.ThongSoDTO;
 import java.util.ArrayList;
 import java.util.List;
-import model.dongiao.DonGiao;
-import repository.dongiao.DonGiaoRepository;
-import service.dongiao.DonGiaoService;
+import model.dongiao.ThongSo;
+import repository.dongiao.ThongSoRepository;
+import service.dongiao.ThongSoService;
 
 /**
  *
- * @author ADMIN KH
+ * @author Admin
  */
-public class DonGiaoImpl implements DonGiaoService{
-     private DonGiaoRepository repository;
+public class ThongSoImpl implements ThongSoService{
+    private ThongSoRepository repository;
 
-    public DonGiaoImpl() {
-     this.repository = new DonGiaoRepository();
-
+    public ThongSoImpl() {
+    repository = new ThongSoRepository();
     }
-
-    @Override
-    public List<DonGiaoDTO> findAll(int position) {
-        List<DonGiaoDTO> listDTO = new ArrayList<>();
-        List<DonGiao> listModel = repository.findAll(position);
-        for (DonGiao model : listModel) {
+     @Override
+    public List<ThongSoDTO> findAll(int position) {
+        List<ThongSoDTO> listDTO = new ArrayList<>();
+        List<ThongSo> listModel = repository.findAll(position);
+        for (ThongSo model : listModel) {
 
 //            KhachHangDTO khachHangDTO = Mapper.modelMapper().map(model.getHoaDon().getKhachHang(), KhachHangDTO.class);
 //            HoaDonDTO hoaDonDTO = Mapper.modelMapper().map(model.getHoaDon(), HoaDonDTO.class);
 //            hoaDonDTO.setKhachHang(khachHangDTO);
-            DonGiaoDTO donGiaoDTO = Mapper.modelMapper().map(model, DonGiaoDTO.class);
+            ThongSoDTO thongSoDTO = Mapper.modelMapper().map(model, ThongSoDTO.class);
 //            donGiaoDTO.setHoaDon(hoaDonDTO);
-            listDTO.add(donGiaoDTO);
+            listDTO.add(thongSoDTO);
         }
         return listDTO;
     }
 
     @Override
-    public List<DonGiaoDTO> findAll() {
-        List<DonGiaoDTO> listDTO = new ArrayList<>();
-        List<DonGiao> listModel = repository.findAll();
-        for (DonGiao model : listModel) {
-            listDTO.add(Mapper.modelMapper().map(model, DonGiaoDTO.class));
+    public List<ThongSoDTO> findAll() {
+        List<ThongSoDTO> listDTO = new ArrayList<>();
+        List<ThongSo> listModel = repository.findAll();
+        for (ThongSo model : listModel) {
+            listDTO.add(Mapper.modelMapper().map(model, ThongSoDTO.class));
         }
         return listDTO;
     }
 
     @Override
-    public DonGiaoDTO findById(String id) {
-        DonGiao model = repository.findById(id);
-        return Mapper.modelMapper().map(model, DonGiaoDTO.class);
+    public ThongSoDTO findById(String id) {
+       ThongSo model = repository.findById(id);
+        return Mapper.modelMapper().map(model, ThongSoDTO.class);
 
     }
 
     @Override
-    public String create(DonGiaoDTO dto) {
+    public String create(ThongSoDTO dto) {
         dto.setId(null);
-        DonGiao model = Mapper.modelMapper().map(dto, DonGiao.class);
+        ThongSo model = Mapper.modelMapper().map(dto, ThongSo.class);
         String result;
         if (repository.save(model) != null) {
             result = "Thêm thành công";
@@ -71,9 +69,9 @@ public class DonGiaoImpl implements DonGiaoService{
     }
 
     @Override
-    public String update(DonGiaoDTO dto) {
+    public String update(ThongSoDTO dto) {
        
-        DonGiao model = Mapper.modelMapper().map(dto, DonGiao.class);
+        ThongSo model = Mapper.modelMapper().map(dto, ThongSo.class);
         String result;
         if (repository.save(model) != null) {
             result = "Sua thanh cong";

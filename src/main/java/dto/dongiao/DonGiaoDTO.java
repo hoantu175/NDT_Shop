@@ -23,7 +23,7 @@ import org.hibernate.validator.constraints.NotBlank;
 @Setter
 public class DonGiaoDTO extends AuditModelDTO {
 
-    @NotBlank(message = "Mã Đơn Giao - Không được để trống !")
+//    @NotBlank(message = "Mã Đơn Giao - Không được để trống !")
     private String maDG;
 
     private HoaDonDTO hoaDon;
@@ -31,18 +31,18 @@ public class DonGiaoDTO extends AuditModelDTO {
     @NotBlank(message = "Địa chỉ - Không được để trống !")
     private String diaChi;
 
-    @NotNull(message = "Tiền thu hộ - Không được để trống")
+//    @NotNull(message = "Tiền thu hộ - Không được để trống")
     private float tienThuHo;
 
     private Long ngayGiao;
 
-    @NotNull(message = "Trạng thái  - Không được để trống")
+//    @NotNull(message = "Trạng thái  - Không được để trống")
     private TrangThaiDonGiao trangThaiDonGiao;
 
     private YeuCauDonHang yeuCauDonHang;
 
-    @NotBlank(message = "Số điện thoại - Không được để trống !")
-    @Pattern(regexp = ModelProperties.REGEX_PHONE_NUMBER, message = "Số điện thoại - Không đúng định dạng !")
+//    @NotBlank(message = "Số điện thoại - Không được để trống !")
+//    @Pattern(regexp = ModelProperties.REGEX_PHONE_NUMBER, message = "Số điện thoại - Không đúng định dạng !")
     private String sdtNguoiNhan;
 
     private String ghiChu;

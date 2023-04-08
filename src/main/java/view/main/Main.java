@@ -15,6 +15,8 @@ import view.event.EventMenuSelected;
 import view.event.EventShowPopupMenu;
 import view.form.thongke.ViewDoanhThu;
 import view.form.MainForm;
+import view.form.dongiao.ViewDonGiao;
+import view.form.dongiao.ViewThongSo;
 import view.form.sanpham.ViewAo;
 import view.swing.MenuItem;
 import view.swing.PopupMenu;
@@ -55,11 +57,19 @@ public class Main extends javax.swing.JFrame implements Runnable{
                     if (subMenuIndex == 0) {
                         main.showForm(new ViewAo());
                     }
-                } else if (menuIndex == 7) {
+                } else if (menuIndex == 8) {
                     if (ShowMessage.show("Bạn chắc chắn muốn thoát ?")) {
                         System.exit(0);
                     }
+                }else if(menuIndex == 7){
+                 
+                        main.showForm(new ViewDonGiao());
+//                    } else if (subMenuIndex == 1) {
+//                        main.showForm(new Form1());
+                    
+                    
                 }
+                
             }
         });
         menu.addEventShowPopup(new EventShowPopupMenu() {

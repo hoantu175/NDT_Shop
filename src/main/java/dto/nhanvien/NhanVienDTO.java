@@ -43,6 +43,4 @@ public class NhanVienDTO extends AuditModelDTO {
     @NotBlank(message = "Email - Không được để trống !")
     @Pattern(regexp = ModelProperties.REGEX_EMAIL)
     private String email;
-
-    private Set<HoaDonDTO> dsHoaDon;
 }
